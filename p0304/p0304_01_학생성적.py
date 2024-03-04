@@ -1,169 +1,162 @@
-students = [] #학생성적저장
-students = [
-    [1, '홍길동', 100, 100, 99, 299, 99.67,1],
-    [2, '유관순', 99, 99, 98, 296, 98.67,1],
-    [3, '이순신', 80, 80, 81, 241, 80.33,1],
-    [4, '김구',100, 100, 90, 290, 96.67,1],
-    [5, '김유신', 90, 70, 50, 210, 70.0,1]]
-cnt = len(students) #학번사용
+students = []
+student = [] # 학생성적저장
+cnt = len(students)
+# 학생번호 사용
 while True:
-    print("-"*40)
-    print("[학생성적프로그램]")
-    print("-"*40)
-    print("1. 학생성적입력")
-    print("2. 학생성적전체출력")
-    print("3. 학생검색")
-    print("4. 학생수정")
-    print("5. 등수처리")
-    print("6. 학생정렬")
-    print("0. 프로그램 종료")
-    print("-"*40)
-    choice = input("원하는 번호를 입력하세요.>> ")
+    print('-'*40)
+    print('[학생성적프로그램]')
+    print('-'*40)
+    print('1. 학생성적입력')
+    print('2. 학생성적전체출력')
+    print('3. 학생검색')
+    print('4. 학생수정')
+    print('5. 등수처리')
+    print('6. 학생정렬')
+    print('0. 프로그램 종료')
+    print('-'*40)
+    choice = input('원하는 번호를 입력하세요:  ')
+    print('-'*40)
     if not choice.isdigit():
-        print("숫자만 입력가능합니다.")
-        continue # 반복문 다시실행
+        print('숫자만 입력 가능합니다.')
+        continue # 반복문 계속실행
     choice = int(choice)
-    # 1.학생성적입력 프로그램
-    if choice == 1:
-        # 무한반복
-        while True:
-            print("학생성적을 입력합니다.")
-            print("-"*10)
-            student = []
-            name = input("이름을 입력하세요.(0.취소)")
+    
+    # 1. 학생성적입력 프로그램
+    if choice == 1 :
+        while True :
+            print('학생성적을 입력합니다.')
+            student = []  # 초기화
+            cnt += 1
+            student.append(cnt)
+            name = input('이름을 입력하세요:  (0. 취소)  ')
+            student.append(name)
             if name == "0":
                 break
-            cnt += 1 #학번
-            student.append(cnt) #학번
-            student.append(name)
-            student.append(int(input("국어점수를 입력하시오.")))
-            student.append(int(input("수학점수를 입력하시오.")))
-            student.append(int(input("영어점수를 입력하시오.")))
-            #student[0]=학번, student[1]=이름
-            sum = student[2]+student[3]+student[4]
-            # 합계저장
-            student.append(sum)
-            # 평균저장
-            student.append("{:.2f}".format(sum/3))
+            kor = int(input('국어 성적 입력:  '))
+            eng = int(input('영어 성적 입력:  '))
+            math = int(input('수학 성적 입력:  '))
+            total = kor+eng+math
+            avg = total / 3
+            student = [cnt,name,kor,eng,math,total]
+            # 합계 저장
+            # 평균 저장
+            student.append('{:.2f}'.format(avg))
+            student.append(1)
             students.append(student)
-            # 전체출력
-            print(students)
-    # 2. 학생성적출력 프로그램
-    elif choice == 2:
-        print("[ 학생성적 출력 ]")
-        print("-"*50)
-        print("학번\t이름\t국어\t영어\t수학\t합계\t평균")
-        print("-"*50)
-        # 전체출력
+
+    # 2. 학생성적전체출력 프로그램
+    elif choice == 2 :
+        print('[ 학생성적전체출력 ]')
+        print('-'*55)
+        print('학번\t이름\t국어\t영어\t수학\t합계\t평균')
+        print('-'*55)
         for stu in students:
             for s in stu:
-                print(s,end="\t")
+                print(s,end ='\t')
             print()
-        print("-"*50)
-    # 3. 학생검색
-    elif choice == 3:
-        # 찾고자 하는 학생찾기
+        kors,engs,maths,totals = 0,0,0,0 
+        for j, stu in enumerate(students):
+            kors += stu[2]
+            engs += stu[3]
+            maths += stu[4]
+            totals += stu[5]
+        avgs = totals / len(students)
+        print()
+        print('--\t합계\t{}\t{}\t{}\t{}\t{:.2f}'.format(kors,engs,maths,totals,avgs))
+        print()
+    
+    elif choice == 3 :
         while True:
-            # 멈춤
-            search = input("검색하고 싶은 학생 이름을 입력하세요.(0.취소)")
-            chk = 0 #찾는 정보확인
+            search = input('검색하고 싶은 학생 이름을 입력하세요(0.취소):  ')
+            chk = 0  # 찾는 정보 확인
             count = 0
-            if search == "0":
+            if search == '0':
                 break
-            for stu in students: #홍길동,유관순,이순신
+            for stu in students: # 홍길동, 유관순, 이순신
                 if search in stu:
-                    chk = 1 # 정보를 찾았을때 정보를 1로 변경
+                    chk = 1 # 정보를 찾았을 때 정보를 1로 변경
                     break
                 count += 1
-            if(chk==1):
+            if chk == 1:
+                print('{}의 학생정보를 찾았습니다.'.format(search))
                 # 전체학생 정보출력
-                print("[ {} 학생성적 출력 ]".format(search))
-                print("-"*50)
-                print("학번\t이름\t국어\t영어\t수학\t합계\t평균")
-                print("-"*50)
+                print('[ {} 학생성적 출력 ]'.format(search))
+                print('-'*50)
+                print('학번\t이름\t국어\t영어\t수학\t합계\t평균')
+                print('-'*50)
                 for i in students[count]:
-                    print(i,end="\t")
+                    print(i,end= "\t")
                 print()
             else:
-                print("찾는 학생 정보가 없습니다.")
-    # 4. 학생검색
+                print('찾는 학생의 정보가 없습니다.')
     elif choice == 4:
         while True:
-            search = input("찾는 학생의 이름을 입력하세요.(0.취소)")
-            if search == "0":
+            search = input('찾는 학생의 이름을 입력하세요(0.취소):  ')
+            if search == '0':
                 break
-            chk=0
-            count=0
+            chk = 0
+            count = 0
             for stu in students:
                 if search in stu:
                     chk = 1
                     break
-                count += 1 #찾는 학생의 위치값
+                count += 1 # 찾는 학생의 위치값
             if chk == 0:
-                print("찾는 학생의 정보가 없습니다.")
+                print('찾는 학생의 정보가 없습니다.')
             else:
-                print("입력한 학생이름 {}을(를) 찾았습니다.".format(search))
-                print("[ 변경할 과목 선택 ]")
-                print("1. 국어 2.영어 3.수학 0.취소 ")
-                print("-"*20)
-                num = int(input(">>"))
-                if num == 1:
-                    print("국어를 선택하셨습니다.")
-                    print("현재 국어점수 : ",students[count][2])
-                    num = int(input("변경점수를 입력하세요."))
-                    students[count][2] = num
-                    print("국어점수가 변경되었습니다.")
-                    # 합계,평균도 수정
-                    students[count][5] = students[count][2]+students[count][3]+students[count][4]
-                    students[count][6] =  float("{:.2f}".format(students[count][5]/3))
-                    # 출력
-                    print(students)
-                elif num == 2:
-                    print("영어를 선택하셨습니다.")
-                    print("현재 영어점수 : ",students[count][3])
-                    num = int(input("변경점수를 입력하세요."))
-                    students[count][3] = num
-                    print("영어점수가 변경되었습니다.")
-                    # 합계,평균도 수정
-                    students[count][5] = students[count][2]+students[count][3]+students[count][4]
-                    students[count][6] =  float("{:.2f}".format(students[count][5]/3))
-                    # 출력
-                    print(students)
-                elif num == 3:
-                    print("수학을 선택하셨습니다.")
-                    print("현재 수학점수 : ",students[count][4])
-                    num = int(input("변경점수를 입력하세요."))
-                    students[count][4] = num
-                    print("수학점수가 변경되었습니다.")
-                    # 합계,평균도 수정
-                    students[count][5] = students[count][2]+students[count][3]+students[count][4]
-                    students[count][6] = float("{:.2f}".format(students[count][5]/3))
-                    # 출력
-                    print(students)
+                print('{}학생의 정보를 찾았습니다.'.format(search))
+                num = input('1. 국어 2. 영어 3. 수학 중 원하시는 과목 수정 번호를 입력하세요:  ')
+                if num == '1' or num == '국어':
+                    print('국어성적 수정을 선택하셨습니다.')
+                    print('-'*50)
+                    # 성적 수정 프로그램 구현
+                    print('{}님의 국어 성적은 {}점 입니다.'.format(search,students[count][2]))
+                    re_kor = int(input('국어 성적 수정값 입력:  '))
+                    students[count][2] = re_kor
+                    print('{}님의 수정된 국어 성적: {}점'.format(search,re_kor))
+                elif num == '2' or num == '영어':
+                    print('영어성적 수정을 선택하셨습니다.')
+                    print('-'*50)
+                    print('{}님의 영어 성적은 {}점 입니다.'.format(search,students[count][3]))
+                    re_eng = int(input('영어 성적 수정값 입력:  '))
+                    students[count][3] = re_eng
+                    print('{}님의 수정된 국어 성적: {}점'.format(search,re_eng))
+                elif num == '3' or num == '수학':
+                    print('수학성적 수정 선택하셨습니다.')
+                    print('-'*50)
+                    print('{}님의 수학 성적은 {}점 입니다.'.format(search,students[count][4]))
+                    re_math = int(input('수학 성적 수정값 입력:  '))
+                    students[count][4] = re_math
+                    print('{}님의 수정된 수학 성적: {}점'.format(search,re_math))
                 else:
-                    print("성적수정 취소를 선택하셨습니다.")
-    # 5. 등수처리
+                    print('잘못입력하셨습니다. 다시 입력해주세요')
+            students[count][5] = students[count][2]+students[count][3]+students[count][4]
+            students[count][6] = '{:.2f}'.format(students[count][5]/3)
     elif choice == 5:
-         # 등수처리 프로그램
-        while True:
-            choice = input("등수처리를 실행하시겠습니까?(1.실행 0.취소)")
-            if choice == "0":
-                print("등수처리를 취소하셨습니다.")
+        while True: 
+            ch = input('등수처리를 실행하시겠습니까? (1.실행 0.취소):  ')
+            if ch == '0':
+                print('등수처리를 취소하였습니다.')
                 break
-            else:
-                # 등수처리 진행
-                for i_stu in students:
-                    no = 1 #초기화
-                    for j_stu in students:
-                        # 각각의 총합 비교
+            elif ch == '1':
+                print('[ 등수처리 ]')
+                print('-'*40)
+                for i, i_stu in enumerate(students):
+                    no = 1 # 초기화
+                    for j, j_stu in enumerate(students):
                         if i_stu[5] < j_stu[5]:
-                            no += 1 #비교대상 총합이 더 크면 1증가
-                    i_stu[7] = no #등수위치에 no 저장
-            print("등수처리가 완료 되었습니다.")
-            print("-"*40)
-            print("[ 등수확인 ]")
-            print(students)
-    # 0. 프로그램종료
+                            no += 1 # 비교대상 총합이 더 크면 1 증가
+                    i_stu[7] = no # 등수 위치에 no 저장
+            else:
+                print('잘못입력하셨습니다. 다시 입력해주세요.')
+            print('등수처리가 완료되었습니다.')
+            print('-'*40)
+    elif choice == 6:
+        while True:
+            pass
+            
     elif choice == 0:
-        print("프로그램을 종료합니다.")
-        break   #반복문종료
+        print('프로그램을 종료합니다.')
+        break  # 반복문 종료
+    else:
+        print('선택된 서비스가 없습니다.')
