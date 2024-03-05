@@ -1,4 +1,9 @@
-students = []
+# students = []
+students = [[1,'홍길동',100,99,87,286,95.33,2],
+            [2,'유관순',98,93,87,278,92.67,3],
+            [3,'이순신',88,76,30,194,64.67,5],
+            [4,'김구',100,100,100,300,100.00,1],
+            [5,'강감찬',98,85,44,227,75.67,4]]
 student = [] # 학생성적저장
 cnt = len(students)
 # 학생번호 사용
@@ -11,7 +16,7 @@ while True:
     print('3. 학생검색')
     print('4. 학생수정')
     print('5. 등수처리')
-    print('6. 학생정렬')
+    print('6. 학생삭제')
     print('0. 프로그램 종료')
     print('-'*40)
     choice = input('원하는 번호를 입력하세요:  ')
@@ -151,9 +156,30 @@ while True:
                 print('잘못입력하셨습니다. 다시 입력해주세요.')
             print('등수처리가 완료되었습니다.')
             print('-'*40)
+    # 학생삭제          
     elif choice == 6:
         while True:
-            pass
+            search = input("삭제하려는 학생의 이름을 입력하세요.")
+            
+            # 이름찾기
+            cnt = 0 # 찾은 학생의 위치
+            # 전체학생 검색
+            for stu in students:
+                if stu[1]==search:
+                    break
+                cnt += 1
+            
+            if cnt == len(students): #전체학생수
+                print("{} 학생이 없습니다.".format(search))
+            else:
+                choice = input("{} 학생을 찾았습니다.삭제하시겠습니까?(1.삭제 0.취소)".format(search))
+                if choice == "1":
+                    print("{}학생의 데이터가 삭제되었습니다.".format(search))
+                    del students[cnt]
+                else:
+                    print("삭제가 취소되었습니다.")    
+            
+            print(students)  
             
     elif choice == 0:
         print('프로그램을 종료합니다.')
